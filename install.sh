@@ -51,14 +51,14 @@ fc-cache -vf
 apt install dmz-cursor-theme -y
 
 # Install librewolf-browser
-apt install librewolf -y
+#apt install librewolf -y
 
 # Enable graphical login and change target from CLI to GUI
 systemctl enable lightdm
 systemctl set-default graphical.target
 
 # Enable wireplumber audio service
-sudo -u $username systemctl --user enable wireplumber.service
+#sudo -u $username systemctl --user enable wireplumber.service
 
 # DWM Setup
 git clone https://github.com/kayodevital/dwm.git
