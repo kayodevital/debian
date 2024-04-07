@@ -30,7 +30,7 @@ git clone https://github.com/kayodevital/wallpapers.git
 #chown -R $username:$username /home/$username
 
 # Installing Essential Programs 
-apt install pcmanfm nitrogen lxpolkit x11-xserver-utils unzip wget pipewire xfce4-volumed xfce4-power-manager nm-applet pavucontrol build-essential libx11-dev libxft-dev libxinerama-dev libx11-xcb-dev libxcb-res0-dev -y
+apt install pcmanfm nitrogen lxpolkit x11-xserver-utils unzip wget pipewire xfce4 xfce4-goodies xfce4-power-manager network-manager network-manager-gnome pavucontrol build-essential libx11-dev libxft-dev libxinerama-dev libx11-xcb-dev libxcb-res0-dev -y
 # Installing Other less important Programs
 apt install neofetch flameshot psmisc vim lxappearance fonts-noto-color-emoji lightdm redshift-gtk xfce4-screenshooter -y
 
@@ -43,6 +43,8 @@ papirus-folders -C cyan --theme ePapirus
 # Installing fonts
 cd $builddir 
 apt install fonts-font-awesome fonts-liberation fonts-ubuntu fonts-recommended -y
+apt install cargo -y
+cargo install exa
 
 # Reloading Font
 fc-cache -vf
@@ -51,7 +53,24 @@ fc-cache -vf
 apt install dmz-cursor-theme -y
 
 # Install librewolf-browser
-#apt install librewolf -y
+sudo apt update && sudo apt install -y wget gnupg lsb-release apt-transport-https ca-certificates
+
+distro=$(if echo " una bookworm vanessa focal jammy bullseye vera uma " | grep -q " $(lsb_release -sc) "; then lsb_release -sc; else echo focal; fi)
+
+wget -O- https://deb.librewolf.net/keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/librewolf.gpg
+
+sudo tee /etc/apt/sources.list.d/librewolf.sources << EOF > /dev/null
+Types: deb
+URIs: https://deb.librewolf.net
+Suites: $distro
+Components: main
+Architectures: amd64
+Signed-By: /usr/share/keyrings/librewolf.gpg
+EOF
+
+sudo apt update
+
+sudo apt install librewolf -y
 
 # Enable graphical login and change target from CLI to GUI
 systemctl enable lightdm
